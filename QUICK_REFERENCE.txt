@@ -1,0 +1,314 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║          EXCALIDRAW MCP SERVER - QUICK STRUCTURE SUMMARY                     ║
+║          Path: /home/anudeep/Documents/AI_content/AntiGravity/skills/        ║
+║                excalidraw-mcp-server                                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+PROJECT METADATA
+────────────────────────────────────────────────────────────────────────────────
+Name:               @mcp-demos/excalidraw-server v0.3.2
+Type:               MCP (Model Context Protocol) App Server
+Language:           TypeScript + React
+Runtime:            Node.js ≥18.0.0
+Package Manager:    pnpm@10.11.0 (enforced)
+Code Size:          ~2,500 lines (TS/TSX)
+Directory Size:     ~38MB (includes git + pnpm-lock)
+Dependencies:       24 direct + optional Bun binaries
+
+
+KEY DIRECTORIES & FILES
+────────────────────────────────────────────────────────────────────────────────
+src/
+  ├── main.ts                 Entry point (HTTP + stdio transports)
+  ├── server.ts               Tool registration & MCP logic
+  ├── checkpoint-store.ts     State persistence (3 implementations)
+  ├── mcp-app.tsx             React widget (Excalidraw rendering)
+  ├── edit-context.ts         Edit tracking
+  ├── dev.tsx                 Dev mock UI
+  └── [sounds, pencil-audio]  Audio utilities
+
+api/
+  └── mcp.ts                  Vercel HTTP handler (⚠️ RELATIVE IMPORTS)
+
+scripts/
+  ├── build.mjs               Multi-stage build orchestration
+  └── setup-bun.mjs           Optional Bun installer
+
+Configuration Files:
+  ├── package.json            24 deps + 8 build scripts
+  ├── manifest.json           MCP v0.3 manifest (2 tools, 1 resource)
+  ├── vite.config.ts          Widget build (single-file HTML)
+  ├── tsconfig.json           TypeScript strict mode
+  ├── vercel.json             Vercel deployment routing
+  └── .mcpbignore             MCP build exclusions
+
+
+BUILD PIPELINE
+────────────────────────────────────────────────────────────────────────────────
+npm run build    (orchestrated by scripts/build.mjs)
+  │
+  ├─→ tsc --noEmit              [Type-check only]
+  ├─→ vite build                [Vite widget build]
+  ├─→ Rename/clean src/         [Organize output]
+  ├─→ tsc -p tsconfig.server.json [Server types]
+  ├─→ bun build src/server.ts   [Server bundle]
+  └─→ bun build src/main.ts     [CLI bundle with shebang]
+
+Output: dist/
+  ├── index.js                 CLI entry (#!/usr/bin/env node)
+  ├── server.js                Library export
+  ├── server.d.ts              TypeScript types
+  └── mcp-app.html             Single-file widget (inlined CSS/JS)
+
+
+CRITICAL EXTERNAL REFERENCES (MIGRATION BLOCKERS)
+────────────────────────────────────────────────────────────────────────────────
+File: api/mcp.ts (Vercel handler)
+  import { createVercelStore } from "../src/checkpoint-store.js"    ⚠️ RELATIVE
+  import { registerTools } from "../src/server.js"                 ⚠️ RELATIVE
+
+⚠️  BLOCKER: Hard-coded relative paths; requires path updates if moving to monorepo
+
+Other Relative Imports:
+  src/main.ts         → ./checkpoint-store.js              ✓ Safe (sibling)
+  src/server.ts       → ./checkpoint-store.js              ✓ Safe (sibling)
+
+
+DEPENDENCIES (KEY PACKAGES)
+────────────────────────────────────────────────────────────────────────────────
+MCP Protocol:
+  @modelcontextprotocol/sdk@1.25.2         Core MCP protocol
+  @modelcontextprotocol/ext-apps@^0.4.0    MCP Apps extension (widgets)
+
+Rendering:
+  @excalidraw/excalidraw@^0.18.0            Diagram library
+  morphdom@^2.7.8                           DOM diffing (SVG updates)
+
+Runtime:
+  express@^5.1.0                            HTTP server
+  react@^19.0.0 + react-dom@^19.0.0         UI framework
+
+State:
+  @upstash/redis@^1.34.0                    Redis KV (optional, Vercel)
+  zod@^4.0.0                                Validation
+
+Build:
+  vite@^6.0.0                               Module bundler
+  vite-plugin-singlefile@^2.3.0             Inline HTML builder
+
+Optional (Bun runtime):
+  @oven/bun-*                               Platform-specific binaries
+
+
+GIT STATUS & VERSION CONTROL
+────────────────────────────────────────────────────────────────────────────────
+Status:             ✅ CLEAN (no uncommitted changes)
+Branch:             main (tracking origin/main)
+Latest Commits:
+  157aa23           fix: mobile fullscreen layout
+  542091b           fix(mcp): root route alias /mcp
+  2d05fc1           feat(app): tweak UI main menu
+
+.gitignore:         node_modules/, dist/, *.mcpb, .vercel, bun.lock
+.mcpbignore:        Excludes: src/, *.ts, CLAUDE.md, .git
+                    Includes: dist/, manifest.json, pnpm-lock.yaml
+
+
+BUILD SYSTEM & SCRIPTS
+────────────────────────────────────────────────────────────────────────────────
+npm run build         Primary build (runs build.mjs pipeline)
+npm run watch         Continuous rebuild (vite watch)
+npm run serve         MCP server with hot-reload (bun --watch)
+npm run start         DEV: build + serve
+npm run dev           DEV: watch + serve (parallel via concurrently)
+npm run dev:ui        Vite dev server only (no MCP, for UI testing)
+npm run postinstall   Optional Bun setup
+
+
+ARCHITECTURE LAYERS
+────────────────────────────────────────────────────────────────────────────────
+1. Server Layer (src/server.ts)
+   - Tool registration (read_me, create_view)
+   - Element validation (Zod schemas)
+   - SVG rendering orchestration
+
+2. State Layer (src/checkpoint-store.ts)
+   - 3 implementations: File (dev), Memory (Vercel), Redis (Upstash)
+   - Diagram elements + camera state persistence
+   - 18-char truncated UUIDs for checkpoint keys
+
+3. Transport Layer (src/main.ts)
+   - HTTP (Streamable) → stateless per-request
+   - stdio → Claude Desktop connections
+   - Express middleware (CORS + routing)
+
+4. Widget Layer (src/mcp-app.tsx)
+   - React component wrapping Excalidraw SVG
+   - morphdom diffing for streaming updates
+   - Fullscreen mode with safe-area insets
+
+
+CONFIGURATION DETAILS
+────────────────────────────────────────────────────────────────────────────────
+manifest.json:
+  - Entry point: dist/index.js
+  - Transport: stdio (Claude Desktop) or HTTP (Vercel)
+  - Tools: read_me (reference), create_view (rendering)
+  - Resource: Single UI widget with hand-drawn diagram
+
+vite.config.ts:
+  - Externals: react, react-dom, @excalidraw/excalidraw, morphdom
+  - CDN Paths: https://esm.sh/ (runtime imports)
+  - Output: Single HTML file with inlined CSS/JS
+  - CSP: Allows esm.sh domain (for Virgil font)
+
+vercel.json:
+  - Build: pnpm run build
+  - Routes: /mcp, /sse, /message → api/mcp
+  - Output: . (project root)
+
+Environment Variables (optional, Vercel + Redis):
+  - UPSTASH_REDIS_REST_URL
+  - UPSTASH_REDIS_REST_TOKEN
+
+
+POTENTIAL MIGRATION BLOCKERS
+────────────────────────────────────────────────────────────────────────────────
+🟡 MEDIUM Blockers:
+  1. Bun build requirement (bun build src/*)
+     → Fallback: esbuild alternative needed
+  2. Vercel API structure (api/mcp.ts with ../src/ imports)
+     → Fix: Update paths if moving directory structure
+
+🟢 LOW Blockers:
+  1. ESM.sh CDN hardcoded (vite.config.ts paths)
+     → Acceptable; consider offline caching
+  2. pnpm@10.11.0 enforcement
+     → npm/yarn may fail; use pnpm
+  3. Checkpoint store flexibility
+     → Multiple implementations available; well-documented
+
+🟢 NO Blockers:
+  1. src/ internal imports (all safe, sibling references)
+  2. Git repository (clean, no uncommitted changes)
+  3. Type safety (TypeScript strict mode enabled)
+
+
+KEY DESIGN DECISIONS (FROM CLAUDE.md)
+────────────────────────────────────────────────────────────────────────────────
+✓ Standard Excalidraw JSON format (not custom extensions)
+✓ SVG-only rendering (no React canvas component)
+✓ morphdom for DOM diffing (smooth streaming updates)
+✓ Checkpoint system with 3 storage backends
+✓ Fullscreen mode with safe-area insets (mobile)
+✓ Screenshot context sent back to Claude for feedback
+✓ Progressive element ordering (shapes → labels → arrows)
+✓ No hot-reload for tool definitions (must restart server)
+
+
+ENVIRONMENT & CONSTRAINTS
+────────────────────────────────────────────────────────────────────────────────
+Runtime Requirements:
+  ✓ Node.js ≥18.0.0 (ESM modules)
+  ✓ Bun optional but recommended (can fallback to esbuild)
+  ✓ pnpm 10.11.0 (enforced, npm/yarn not recommended)
+
+Code Constraints:
+  ✓ No console.log in widget (use SDK logger)
+  ✓ No SVG element transforms (breaks morphdom diffing)
+  ✓ Font loading online-only (esm.sh dependency)
+  ✓ No .d.ts generation for React components (only server.d.ts)
+
+Widget Constraints:
+  ✓ Mobile fullscreen requires safe-area insets
+  ✓ CSP must allow esm.sh domain
+  ✓ Single-file HTML output (~200-300KB)
+
+
+RECOMMENDATIONS FOR MIGRATION
+────────────────────────────────────────────────────────────────────────────────
+1. ✓ Plan monorepo layout first (before moving api/)
+2. ✓ Decide build tool fallback (if Bun unavailable)
+3. ✓ Test Vercel paths (update api/mcp.ts imports)
+4. ✓ Add .env.example (for Redis variables)
+5. ✓ Keep pnpm version locked (10.11.0)
+6. ✓ Consider .d.ts generation (if lib usage needed)
+7. ✓ Review CLAUDE.md before making changes
+8. ✓ Preserve checkpoint store flexibility
+
+
+DEPLOYMENT OPTIONS
+────────────────────────────────────────────────────────────────────────────────
+✓ Vercel (official): Routes via api/mcp, Redis optional
+✓ Local Node: stdio or HTTP on localhost:3001
+✓ Docker: Build with pnpm, run dist/index.js
+✓ Custom hosting: HTTP transport with configurable storage
+
+
+DOCUMENTATION QUALITY
+────────────────────────────────────────────────────────────────────────────────
+⭐⭐⭐ CLAUDE.md (205 lines)
+  - Architecture decisions with reasoning
+  - Debugging guide with log file paths
+  - Common issues and gotchas
+  - Rendering pipeline explanation
+
+⭐⭐  README.md
+  - Installation instructions
+  - Usage examples
+  - Deploy-to-Vercel guide
+
+⭐⭐  manifest.json
+  - MCP metadata (v0.3)
+  - Tool descriptions
+
+⭐   Scripts/Config files
+  - Well-commented build pipeline
+  - Vite config with inline explanations
+
+
+MIGRATION READINESS: 🟢 READY
+────────────────────────────────────────────────────────────────────────────────
+✓ Well-organized structure
+✓ Comprehensive documentation (CLAUDE.md)
+✓ Self-contained (minimal external dependencies)
+✓ Git clean (no uncommitted changes)
+✓ Reproducible builds (pnpm-lock.yaml)
+✓ Multiple deployment options
+✓ Configurable storage backends
+
+Requirements:
+→ Plan directory layout before moving api/
+→ Update relative paths if changing structure
+→ Lock build tool (Bun or esbuild)
+→ Test deployment pipeline
+→ Preserve CLAUDE.md for future reference
+
+
+MOST IMPORTANT FILES
+────────────────────────────────────────────────────────────────────────────────
+1. CLAUDE.md                  Read FIRST - architecture + debugging guide
+2. src/server.ts              Tool definitions + MCP logic
+3. scripts/build.mjs          Build pipeline orchestration
+4. api/mcp.ts                 Vercel handler (path-sensitive)
+5. vite.config.ts             Widget build output configuration
+6. manifest.json              MCP app metadata
+7. package.json               Dependencies + build scripts
+
+
+FINAL STATUS
+────────────────────────────────────────────────────────────────────────────────
+Structure:        ✅ Well-organized, hierarchical
+Build System:     ✅ Multi-stage, reproducible
+Dependencies:     ✅ Explicit, locked
+Documentation:    ✅ Comprehensive
+Git Status:       ✅ Clean
+Migration Ready:  ✅ YES (with minor path updates needed)
+
+Risk Level:       🟢 LOW
+Complexity:       🟡 MEDIUM (Bun + Vite + MCP protocol)
+Maintainability:  🟢 HIGH (clear separation of concerns)
+
+Generated: 2024-12-15
+Full Report: /home/anudeep/Documents/AI_content/AntiGravity/skills/
+             excalidraw-mcp-server/MIGRATION_EXPLORATION_REPORT.md (17KB, 501 lines)

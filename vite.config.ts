@@ -33,7 +33,7 @@ export default defineConfig({
         },
       },
     },
-    outDir: "dist",
+    outDir: "runtime/dist",
     emptyOutDir: false,
   },
 });
