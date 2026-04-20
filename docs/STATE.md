@@ -44,11 +44,12 @@ None
 - README Ownership: Project-specific README maintained (not upstream) — COMPLETE
 
 ## Release Status (v1.2.0)
-- Git tag v1.2.0 created and pushed to GitHub
-- Version file .versions/current.txt updated to 1.2.0
-- Documentation updated (README.md, PROJECT.md, AGENTS.md, STATE.md)
-- GitHub release created and published
+- ✅ Git tag v1.2.0 created and pushed to GitHub
+- ✅ Version file .versions/current.txt updated to 1.2.0
+- ✅ Documentation updated (README.md, PROJECT.md, AGENTS.md, STATE.md)
+- ✅ GitHub release created and published via API
 - Release URL: https://github.com/beholder20/excalidraw-mcp/releases/tag/v1.2.0
+- Release ID: 311092280
 
 ## Version History
 - v1.2.0 (20-Apr-2026): README update and release cleanup
