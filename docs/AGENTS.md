@@ -1,6 +1,6 @@
 # AGENTS.md - Agent Guidelines for Excalidraw MCP Server
 
-**Version:** 1.1.0  
+**Version:** 1.2.0  
 **Last Updated:** 20-Apr-2026  
 **Project:** Excalidraw MCP Server  
 **Repository:** https://github.com/beholder20/excalidraw-mcp
@@ -345,7 +345,7 @@ When multiple agents work on this project:
 ```yaml
 project:
   name: "excalidraw-mcp"
-  version: "1.1.0"
+  version: "1.2.0"
   status: "active-development"
 
 architecture:
@@ -362,15 +362,16 @@ performance:
   storage: "File/Memory/Redis"
 
 recent_changes:
-  - "Version bump to v1.1.0"
-  - "Documentation updates"
+  - "README update for v1.2.0"
+  - "Version bump and release cleanup"
 ```
 
 ---
 
 ## 📝 Version History
 
-- **v1.1.0** (20-Apr-2026): Version bump and documentation updates
+- **v1.2.0** (20-Apr-2026): README update and release cleanup
+- **v1.1.0** (20-Apr-2026): Documentation updates, AGENTS.md added
 - **v1.0.0** (19-Apr-2026): Initial migration release
 
 ---

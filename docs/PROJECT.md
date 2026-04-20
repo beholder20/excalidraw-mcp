@@ -2,7 +2,7 @@
 
 Standalone MCP server that streams Excalidraw diagrams as SVG with hand-drawn animations.
 
-**Version:** 1.1.0  
+**Version:** 1.2.0  
 **Last Updated:** 20-Apr-2026  
 **Last Migration:** Core migration from skills/ to dedicated project directory completed on 19-Apr-2026
 

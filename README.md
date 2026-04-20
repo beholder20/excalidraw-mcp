@@ -1,33 +1,54 @@
-# Excalidraw MCP App Server
+# Excalidraw MCP Server
 
-MCP server that streams hand-drawn Excalidraw diagrams with smooth viewport camera control and interactive fullscreen editing.
+Standalone MCP server that streams Excalidraw diagrams as SVG with hand-drawn animations.
+
+**Version:** 1.1.0  
+**Repository:** https://github.com/beholder20/excalidraw-mcp
 
 ![Demo](docs/demo.gif)
 
-## Install
+---
 
-Works with any client that supports [MCP Apps](https://modelcontextprotocol.io/docs/extensions/apps) — Claude, ChatGPT, VS Code, Goose, and others. If something doesn't work, please [open an issue](https://github.com/antonpk1/excalidraw-mcp-app/issues).
+## Features
 
-### Remote (recommended)
+- Streams Excalidraw diagrams as SVG with hand-drawn animations
+- Two MCP tools: `read_me` (cheat sheet) and `create_view` (diagram creation)
+- Checkpoint system for diagram state persistence
+- Supports both HTTP (Streamable) and stdio transports
+- Auto-sizing, fullscreen mode, and progressive element ordering
+- SVG-only rendering with morphdom for efficient updates
 
-### `https://mcp.excalidraw.com`
+---
 
-For apps that don't yet have an official integration, you can add a custom MCP / connector (naming can vary between apps).
-
-### Local
-
-**Option A: Download Extension**
-
-1. Download `excalidraw-mcp-app.mcpb` from [Releases](https://github.com/antonpk1/excalidraw-mcp-app/releases)
-2. Double-click to install in Claude Desktop
-
-**Option B: Build from Source**
+## Installation
 
 ```bash
-git clone https://github.com/excalidraw/excalidraw-mcp.git
-cd excalidraw-mcp-app
-pnpm install && pnpm run build
+# Clone the repository
+git clone https://github.com/beholder20/excalidraw-mcp.git
+cd excalidraw-mcp
+
+# Install dependencies
+pnpm install
 ```
+
+---
+
+## Usage
+
+### HTTP (Streamable) Mode
+
+```bash
+npm run serve
+# Server starts at http://localhost:3001/mcp
+```
+
+### stdio Mode (Claude Desktop)
+
+```bash
+node runtime/dist/index.js --stdio
+```
+
+**Claude Desktop Configuration**
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
@@ -36,7 +57,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "excalidraw": {
       "command": "node",
-      "args": ["/path/to/excalidraw-mcp-app/dist/index.js", "--stdio"]
+      "args": ["/path/to/excalidraw-mcp/runtime/dist/index.js", "--stdio"]
     }
   }
 }
@@ -44,54 +65,108 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 Restart Claude Desktop.
 
-## Usage
-
-Example prompts:
-- "Draw a cute cat using excalidraw"
-- "Draw an architecture diagram showing a user connecting to an API server which talks to a database"
-
-## What are MCP Apps and how can I build one?
-
-Text responses can only go so far. Sometimes users need to interact with data, not just read about it. [MCP Apps](https://github.com/modelcontextprotocol/ext-apps/) is an official Model Context Protocol extension that lets servers return interactive HTML interfaces (data visualizations, forms, dashboards) that render directly in the chat.
-
-- **Getting started for humans**: [documentation](https://modelcontextprotocol.io/docs/extensions/apps)
-- **Getting started for AIs**: [skill](https://github.com/modelcontextprotocol/ext-apps/blob/main/plugins/mcp-apps/skills/create-mcp-app/SKILL.md)
-
-## Contributing
-
-PRs welcome! See [Local](#local) above for build instructions.
-
-### Deploy your own instance
-
-You can deploy your own copy to Vercel in a few clicks:
-
-1. Fork this repo
-2. Go to [vercel.com/new](https://vercel.com/new) and import your fork
-3. No environment variables needed — just deploy
-4. Your server will be at `https://your-project.vercel.app/mcp`
-
-### Release checklist
-
-<details>
-<summary>For maintainers</summary>
+### Development Modes
 
 ```bash
-# 1. Bump version in manifest.json and package.json
-# 2. Build and pack
-pnpm run build && mcpb pack .
+# Full MCP flow with watch mode
+npm run dev
 
-# 3. Create GitHub release
-gh release create v0.3.0 excalidraw-mcp-app.mcpb --title "v0.3.0" --notes "What changed"
+# Standalone UI (no MCP server)
+npm run dev:ui
+# Opens http://localhost:5173/index-dev.html
 
-# 4. Deploy to Vercel
-vercel --prod
+# Build only
+npm run build
 ```
 
-</details>
+---
+
+## Tools
+
+### `read_me`
+
+Returns a cheat sheet with element format, color palettes, coordinate tips, and examples. Call this before `create_view`.
+
+### `create_view`
+
+Takes an `elements` JSON string (standard Excalidraw element format) and renders a diagram. Supports streaming partial updates during generation, then sends a PNG screenshot to the model context for verification.
+
+---
+
+## Build & Runtime
+
+- **Build Tool:** Vite + Bun (optional, for faster builds)
+- **Output:** `runtime/dist/`
+- **Entry Point:** `runtime/dist/index.js`
+- **Runtime Artifacts:** `runtime/logs/`, `runtime/data/`
+- **Dependencies:** Managed by pnpm@10.11.0
+
+---
+
+## Documentation
+
+- [PROJECT.md](docs/PROJECT.md) — Project overview, installation, usage
+- [ROADMAP.md](docs/ROADMAP.md) — Migration phases and progress
+- [STATE.md](docs/STATE.md) — Current development status
+- [AGENTS.md](docs/AGENTS.md) — Agent guidelines for this project
+- [INDEX.md](docs/INDEX.md) — Complete file listing
+- [CLAUDE.md](CLAUDE.md) — Architecture and design decisions
+- [GitHub MCP Guide](docs/github_mcp.md) — Using GitHub MCP tools
+
+---
+
+## Development
+
+### Scripts
+
+```bash
+pnpm install          # Install dependencies
+npm run build         # Production build
+npm run dev           # Dev mode (watch + serve)
+npm run dev:ui        # Standalone UI only
+npm run serve         # HTTP server only
+npm run watch         # Vite watch mode
+```
+
+### Testing
+
+```bash
+npm test              # Run all tests
+npm run test:coverage # Run with coverage
+```
+
+---
+
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/).
+
+- **v1.0.0** — Initial migration release (19-Apr-2026)
+- **v1.1.0** — Documentation updates, AGENTS.md added (20-Apr-2026)
+- **v1.2.0** — README update and release cleanup (20-Apr-2026)
+
+Current version is stored in `.versions/current.txt`.
+
+---
+
+## Release Process
+
+1. Update version in `.versions/current.txt`
+2. Update documentation (PROJECT.md, STATE.md, AGENTS.md)
+3. Commit: `git commit -m "chore: bump version to vX.Y.Z"`
+4. Tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z: description"`
+5. Push: `git push origin main && git push origin vX.Y.Z`
+6. Create GitHub release from tag
+
+---
 
 ## Credits
 
 Built with [Excalidraw](https://github.com/excalidraw/excalidraw) — a virtual whiteboard for sketching hand-drawn like diagrams.
+
+Forked from [excalidraw/excalidraw-mcp](https://github.com/excalidraw/excalidraw-mcp).
+
+---
 
 ## License
 
