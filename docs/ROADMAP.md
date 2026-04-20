@@ -5,7 +5,7 @@
 The Excalidraw MCP Server is a standalone Model Context Protocol (MCP) server that streams Excalidraw diagrams as SVG with hand-drawn animations. It supports both HTTP (Streamable) and stdio transports, making it compatible with Claude Desktop, VS Code, and any MCP-compatible client.
 
 **Repository:** https://github.com/beholder20/excalidraw-mcp  
-**Version:** 1.2.0  
+**Version:** 1.2.2  
 **License:** MIT  
 **Forked from:** excalidraw/excalidraw-mcp
 
@@ -22,7 +22,7 @@ The Excalidraw MCP Server is a standalone Model Context Protocol (MCP) server th
 
 ---
 
-## 🚀 Current Status (v1.2.0 — 20-Apr-2026)
+## 🚀 Current Status (v1.2.2 — 20-Apr-2026)
 
 ### Completed Milestones
 
@@ -30,13 +30,15 @@ The Excalidraw MCP Server is a standalone Model Context Protocol (MCP) server th
 |---------|------|-------------|
 | **v1.0.0** | 19-Apr-2026 | Migration complete: full git history preserved, build system configured, documentation suite created |
 | **v1.1.0** | 20-Apr-2026 | Added AGENTS.md, updated documentation, version tracking synchronized |
-| **v1.2.0** | 20-Apr-2026 | README completely rewritten for forked project, all docs updated, releases published |
+| **v1.2.0** | 20-Apr-2026 | README completely rewritten for forked project identity, all docs updated, releases published |
+| **v1.2.1** | 20-Apr-2026 | OpenCode IDE integration: .opencode.json + OPENCODE.md guide, ROADMAP enhanced with future planning |
+| **v1.2.2** | 20-Apr-2026 | Build outputs documentation: documented runtime/dist/ structure, 5-phase build pipeline, usage examples, troubleshooting |
 
 ### Active Development
 - **Branch:** `main`
-- **Commits:** 60+ (including full migration history)
-- **Tags:** v1.0.0, v1.1.0, v1.2.0
-- **Releases:** All three versions published on GitHub
+- **Commits:** 65+ (including full migration history)
+- **Tags:** v1.0.0, v1.1.0, v1.2.0, v1.2.1, v1.2.2
+- **Releases:** All five versions published on GitHub
 
 ---
 
@@ -50,15 +52,7 @@ The Excalidraw MCP Server is a standalone Model Context Protocol (MCP) server th
 - [ ] Set up code coverage reporting (target: 80%+)
 - [ ] Add end-to-end tests with Playwright
 
-### v1.4.0 — OpenCode IDE Integration (Planned)
-- [ ] Create OpenCode workspace configuration (`.opencode/`)
-- [ ] Add OpenCode-specific MCP server registration
-- [ ] Document OpenCode IDE setup in README
-- [ ] Test with OpenCode terminal and desktop apps
-- [ ] Optimize for multi-session development
-- [ ] Add OpenCode skill integration examples
-
-### v1.5.0 — Features & Enhancements (Planned)
+### v1.4.0 — Feature Enhancements (Planned)
 - [ ] Support for additional Excalidraw element types
 - [ ] Improved checkpoint management UI
 - [ ] Export options: PNG, SVG, JSON
@@ -78,14 +72,12 @@ The Excalidraw MCP Server is a standalone Model Context Protocol (MCP) server th
 ## 🔧 OpenCode IDE Compatibility
 
 ### Current Status
-✅ **Compatible** — The Excalidraw MCP Server works with any MCP-compatible client, including:
+✅ **Integrated** — OpenCode IDE support was added in v1.2.1:
 
-- OpenCode (terminal, desktop, IDE extensions)
-- Claude Desktop
-- VS Code with MCP extensions
-- ChatGPT Plus/Pro
-- Goose
-- Any [MCP Apps](https://github.com/modelcontextprotocol/ext-apps/) compatible client
+- Project-level `.opencode.json` configuration
+- Comprehensive `docs/OPENCODE.md` guide (700+ lines)
+- Tested with terminal, desktop, and IDE extension modes
+- Multi-session development workflow documented
 
 ### OpenCode-Specific Setup
 
@@ -236,10 +228,11 @@ User Prompt → MCP Client → Server (stdio/HTTP) → Tool Handler
 |------|-----------|
 | 19-Apr-2026 | v1.0.0 — Migration release (complete) |
 | 20-Apr-2026 | v1.1.0 — Documentation updates (complete) |
-| 20-Apr-2026 | v1.2.0 — README update & cleanup (complete) |
+| 20-Apr-2026 | v1.2.0 — README rewrite & release cleanup (complete) |
+| 20-Apr-2026 | v1.2.1 — OpenCode IDE integration (complete) |
+| 20-Apr-2026 | v1.2.2 — Build outputs documentation (complete) |
 | Q2 2026 | v1.3.0 — Testing & CI/CD (planned) |
-| Q2 2026 | v1.4.0 — OpenCode IDE integration (planned) |
-| Q3 2026 | v1.5.0 — Feature enhancements (planned) |
+| Q3 2026 | v1.4.0 — Feature enhancements (planned) |
 | Future | v2.0.0 — Major architecture update (TBD) |
 
 ---
@@ -276,15 +269,15 @@ User Prompt → MCP Client → Server (stdio/HTTP) → Tool Handler
 
 | Document | Purpose | Status |
 |----------|---------|--------|
-| `README.md` | Project overview, quick start | ✅ Current (v1.2.0) |
+| `README.md` | Project overview, quick start | ✅ Current (v1.2.2) |
 | `docs/PROJECT.md` | Detailed project info, installation, usage | ✅ Current |
 | `docs/ROADMAP.md` | This document — project planning & milestones | ✅ Current |
 | `docs/STATE.md` | Current development status, decisions, learning | ✅ Current |
-| `docs/AGENTS.md` | Agent guidelines for AI assistants | ✅ Current (v1.2.0) |
+| `docs/AGENTS.md` | Agent guidelines for AI assistants | ✅ Current (v1.2.2) |
 | `docs/INDEX.md` | Complete file listing | ✅ Current |
 | `docs/github_mcp.md` | GitHub MCP tools reference | ✅ Current |
 | `CLAUDE.md` | Architecture & design decisions | ✅ Current |
-| `RELEASE_NOTES_v*.md` | Version-specific release notes | ✅ For v1.0.0–v1.2.0 |
+| `RELEASE_NOTES_v*.md` | Version-specific release notes | ✅ For v1.0.0–v1.2.2 |
 
 ---
 
