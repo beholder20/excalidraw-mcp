@@ -2,7 +2,7 @@
 
 Standalone MCP server that streams Excalidraw diagrams as SVG with hand-drawn animations.
 
-**Version:** 1.1.0  
+**Version:** 1.2.1  
 **Repository:** https://github.com/beholder20/excalidraw-mcp
 
 ![Demo](docs/demo.gif)
@@ -17,6 +17,7 @@ Standalone MCP server that streams Excalidraw diagrams as SVG with hand-drawn an
 - Supports both HTTP (Streamable) and stdio transports
 - Auto-sizing, fullscreen mode, and progressive element ordering
 - SVG-only rendering with morphdom for efficient updates
+- **OpenCode IDE compatible** — works with terminal, desktop, and IDE extensions
 
 ---
 
@@ -65,53 +66,51 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 Restart Claude Desktop.
 
-### Development Modes
+### OpenCode IDE Integration
 
-```bash
-# Full MCP flow with watch mode
-npm run dev
+The Excalidraw MCP Server is fully compatible with OpenCode IDE (terminal, desktop, and IDE extensions).
 
-# Standalone UI (no MCP server)
-npm run dev:ui
-# Opens http://localhost:5173/index-dev.html
+**Project configuration:** `.opencode.json` (included)
 
-# Build only
-npm run build
-```
+**Setup:**
 
----
+1. Build the project:
+   ```bash
+   pnpm install && npm run build
+   ```
 
-## Tools
+2. Configure OpenCode (choose one):
 
-### `read_me`
+   **stdio mode** (terminal/desktop):
+   ```json
+   {
+     "mcp": {
+       "excalidraw": {
+         "type": "local",
+         "command": ["node"],
+         "args": ["/path/to/excalidraw-mcp/runtime/dist/index.js", "--stdio"],
+         "enabled": true
+       }
+     }
+   }
+   ```
 
-Returns a cheat sheet with element format, color palettes, coordinate tips, and examples. Call this before `create_view`.
+   **HTTP mode** (IDE/web):
+   ```json
+   {
+     "mcp": {
+       "excalidraw": {
+         "type": "http",
+         "url": "http://localhost:3001/mcp",
+         "enabled": true
+       }
+     }
+   }
+   ```
 
-### `create_view`
+3. Restart OpenCode — the Excalidraw tools will be available.
 
-Takes an `elements` JSON string (standard Excalidraw element format) and renders a diagram. Supports streaming partial updates during generation, then sends a PNG screenshot to the model context for verification.
-
----
-
-## Build & Runtime
-
-- **Build Tool:** Vite + Bun (optional, for faster builds)
-- **Output:** `runtime/dist/`
-- **Entry Point:** `runtime/dist/index.js`
-- **Runtime Artifacts:** `runtime/logs/`, `runtime/data/`
-- **Dependencies:** Managed by pnpm@10.11.0
-
----
-
-## Documentation
-
-- [PROJECT.md](docs/PROJECT.md) — Project overview, installation, usage
-- [ROADMAP.md](docs/ROADMAP.md) — Migration phases and progress
-- [STATE.md](docs/STATE.md) — Current development status
-- [AGENTS.md](docs/AGENTS.md) — Agent guidelines for this project
-- [INDEX.md](docs/INDEX.md) — Complete file listing
-- [CLAUDE.md](CLAUDE.md) — Architecture and design decisions
-- [GitHub MCP Guide](docs/github_mcp.md) — Using GitHub MCP tools
+**Detailed guide:** See [docs/OPENCODE.md](docs/OPENCODE.md)
 
 ---
 
@@ -137,13 +136,27 @@ npm run test:coverage # Run with coverage
 
 ---
 
+## Documentation
+
+- [PROJECT.md](docs/PROJECT.md) — Project overview, installation, usage
+- [ROADMAP.md](docs/ROADMAP.md) — Project planning and future roadmap
+- [STATE.md](docs/STATE.md) — Current development status
+- [AGENTS.md](docs/AGENTS.md) — Agent guidelines for AI assistants
+- [OPENCODE.md](docs/OPENCODE.md) — OpenCode IDE integration guide
+- [INDEX.md](docs/INDEX.md) — Complete file listing
+- [CLAUDE.md](CLAUDE.md) — Architecture and design decisions
+- [GitHub MCP Guide](docs/github_mcp.md) — Using GitHub MCP tools
+
+---
+
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org/).
 
-- **v1.0.0** — Initial migration release (19-Apr-2026)
-- **v1.1.0** — Documentation updates, AGENTS.md added (20-Apr-2026)
+- **v1.2.1** — OpenCode IDE integration & ROADMAP enhancement (20-Apr-2026)
 - **v1.2.0** — README update and release cleanup (20-Apr-2026)
+- **v1.1.0** — Documentation updates, AGENTS.md added (20-Apr-2026)
+- **v1.0.0** — Initial migration release (19-Apr-2026)
 
 Current version is stored in `.versions/current.txt`.
 
