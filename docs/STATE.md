@@ -1,7 +1,7 @@
 # Project State
 
 ## Current Focus
-v1.2.0 release preparation — README.md updated to reflect forked project identity and current version
+v1.2.1 release complete — OpenCode IDE integration added, ROADMAP enhanced, all documentation updated
 
 ## Status
 Completed
@@ -13,20 +13,20 @@ Completed
 - Project successfully migrated from /skills/ to dedicated repository (v1.0.0)
 - Full git history preserved across migration
 - Build system configured with Vite + Bun, output to runtime/dist/
-- Documentation suite created per AGENTS.md standards
-- Version tracking implemented with .versions/current.txt
-- Git tagging workflow established (v1.0.0, v1.1.0, v1.2.0)
-- GitHub releases published for all versions
-- README.md updated to reflect forked project identity and current version
-- AGENTS.md version kept in sync across all releases
+- Documentation suite created and continuously enhanced per AGENTS.md standards
+- Version tracking implemented with semantic versioning (v1.0.0 → v1.2.1)
+- Git tagging workflow established with automated release creation via API
+- OpenCode IDE integration completed: .opencode.json + docs/OPENCODE.md
+- ROADMAP.md expanded with future planning (v1.3.0–v2.0.0)
+- All releases published successfully on GitHub
 
 ## Last Session
-Updated README.md for v1.2.0, bumped version to 1.2.0 across all documentation files, and prepared for release
+Completed v1.2.1 release: added OpenCode IDE integration, enhanced ROADMAP, created OPENCODE.md and .opencode.json, published GitHub release
 
 ## Next Actions
-1. Create GitHub release for v1.2.0 (tag and push)
-2. Verify release publication
-3. Optional: Update external references (if any)
+1. (Optional) Implement testing suite for v1.3.0
+2. (Optional) Add more OpenCode skill examples
+3. (Optional) Set up CI/CD pipeline (GitHub Actions)
 
 ## Open Questions
 None
@@ -41,7 +41,8 @@ None
 - Execution Approach: Phase A (core) then Phase B (config/build) — COMPLETE
 - Documentation Standard: Follow AGENTS.md template — COMPLETE
 - Versioning: Semantic versioning with git tags — COMPLETE
-- README Ownership: Project-specific README maintained (not upstream) — COMPLETE
+- README Ownership: Project-specific README maintained — COMPLETE
+- OpenCode Integration: First-class IDE support via .opencode.json — COMPLETE
 
 ## Release Status (v1.2.1)
 - ✅ Git tag v1.2.1 created and pushed to GitHub
