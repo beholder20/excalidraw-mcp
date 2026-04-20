@@ -43,32 +43,11 @@ None
 - Versioning: Semantic versioning with git tags — COMPLETE
 
 ## Release Status (v1.1.0)
-- Git tag v1.1.0 created and pushed to GitHub
-- Version file .versions/current.txt updated to 1.1.0
-- Documentation updated (PROJECT.md, STATE.md, AGENTS.md)
-- GitHub release creation via API encountering HTTP 500 errors
-- Release ready for manual creation from tag v1.1.0
-
-### Manual Release Instructions
-1. Go to https://github.com/beholder20/excalidraw-mcp/releases
-2. Click "Draft a new release"
-3. Select tag `v1.1.0`
-4. Title: `v1.1.0 - Version bump and documentation updates`
-5. Body:
-   ```
-   ## Changes
-
-   - Bumped version to 1.1.0
-   - Updated documentation (PROJECT.md, STATE.md, AGENTS.md)
-   - Improved project tracking and version management
-
-   This release follows the successful migration of Excalidraw MCP Server from the /skills/ directory to a dedicated project repository.
-
-   **Version:** 1.1.0
-   **Released:** 20-Apr-2026
-   **Repository:** https://github.com/beholder20/excalidraw-mcp
-   ```
-6. Click "Publish release"
+- ✅ Git tag v1.1.0 created and pushed to GitHub
+- ✅ Version file .versions/current.txt updated to 1.1.0
+- ✅ Documentation updated (PROJECT.md, STATE.md, AGENTS.md)
+- ✅ GitHub release created manually (confirmed by user)
+- Release URL: https://github.com/beholder20/excalidraw-mcp/releases/tag/v1.1.0
 
 ## Version History
 - v1.1.0 (20-Apr-2026): Documentation updates and version bump
