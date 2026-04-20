@@ -13,6 +13,7 @@ This file lists all the files and directories in the excalidraw-mcp-build projec
 - `.gitignore` - Git ignore rules
 - `.npmrc` - NPM configuration
 - `.mcpbignore` - MCP build ignore rules
+- `.opencode.json` - OpenCode project configuration
 - `CLAUDE.md` - Architecture and design decisions
 - `index-dev.html` - Development HTML entry point
 - `manifest.json` - MCP manifest
@@ -33,9 +34,11 @@ This file lists all the files and directories in the excalidraw-mcp-build projec
 ## Docs Directory
 - `PROJECT.md` - Project scope and progress
 - `INDEX.md` - This file (list of project files)
-- `REQUIREMENTS.md` - Primary value proposition and key objectives
 - `ROADMAP.md` - Project roadmap, phases, dependencies, requirements, plans, success criteria
 - `STATE.md` - Current state and phase accomplishments
+- `AGENTS.md` - Agent guidelines for AI assistants (project-specific)
+- `OPENCODE.md` - OpenCode IDE integration guide
+- `github_mcp.md` - GitHub MCP tools reference
 - `demo.gif` - Demonstration animation
 - `logo.png` - Project logo
 
