@@ -1,6 +1,6 @@
 # AGENTS.md - Agent Guidelines for Excalidraw MCP Server
 
-**Version:** 1.2.1  
+**Version:** 1.2.2  
 **Last Updated:** 20-Apr-2026  
 **Project:** Excalidraw MCP Server  
 **Repository:** https://github.com/beholder20/excalidraw-mcp
@@ -345,7 +345,7 @@ When multiple agents work on this project:
 ```yaml
 project:
   name: "excalidraw-mcp"
-  version: "1.2.1"
+  version: "1.2.2"
   status: "active-development"
 
 architecture:
@@ -362,15 +362,16 @@ performance:
   storage: "File/Memory/Redis"
 
 recent_changes:
+  - "README update for v1.2.2 (version correction + OpenCode docs)"
   - "OpenCode IDE integration (v1.2.1)"
   - "ROADMAP enhancement and OPENCODE.md added"
-  - "Project-level .opencode.json created"
 ```
 
 ---
 
 ## 📝 Version History
 
+- **v1.2.2** (20-Apr-2026): README update and OpenCode documentation
 - **v1.2.1** (20-Apr-2026): OpenCode IDE integration and ROADMAP enhancement
 - **v1.2.0** (20-Apr-2026): README update and release cleanup
 - **v1.1.0** (20-Apr-2026): Documentation updates, AGENTS.md added
