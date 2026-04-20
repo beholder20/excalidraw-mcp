@@ -43,15 +43,17 @@ None
 - Versioning: Semantic versioning with git tags — COMPLETE
 - README Ownership: Project-specific README maintained (not upstream) — COMPLETE
 
-## Release Status (v1.2.0)
-- ✅ Git tag v1.2.0 created and pushed to GitHub
-- ✅ Version file .versions/current.txt updated to 1.2.0
-- ✅ Documentation updated (README.md, PROJECT.md, AGENTS.md, STATE.md)
+## Release Status (v1.2.1)
+- ✅ Git tag v1.2.1 created and pushed to GitHub
+- ✅ Version file .versions/current.txt remains at 1.2.1 (patch release)
+- ✅ Documentation enhanced: ROADMAP.md, INDEX.md, OPENCODE.md added
+- ✅ OpenCode IDE configuration: `.opencode.json` created
 - ✅ GitHub release created and published via API
-- Release URL: https://github.com/beholder20/excalidraw-mcp/releases/tag/v1.2.0
-- Release ID: 311092280
+- Release URL: https://github.com/beholder20/excalidraw-mcp/releases/tag/v1.2.1
+- Release ID: 311093692
 
 ## Version History
+- v1.2.1 (20-Apr-2026): OpenCode IDE integration and ROADMAP enhancement
 - v1.2.0 (20-Apr-2026): README update and release cleanup
 - v1.1.0 (20-Apr-2026): Documentation updates, AGENTS.md added
 - v1.0.0 (19-Apr-2026): Initial migration release
